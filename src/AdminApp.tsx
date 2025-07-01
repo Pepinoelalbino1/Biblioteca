@@ -7,10 +7,10 @@ import { Resources } from './biblioteca/admin/Resources';
 
 const AdminApp: React.FC = () => {
   return (
-    <div className="app">
-      <div className="app-container">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      <div className="flex h-screen">
         <Sidebar />
-        <main className="main-content">
+        <main className="flex-1 overflow-y-auto">
           <Routes>
             <Route path="/" element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
@@ -24,4 +24,4 @@ const AdminApp: React.FC = () => {
   );
 };
 
-export default AdminApp; 
+export default AdminApp;

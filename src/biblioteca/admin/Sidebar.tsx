@@ -20,8 +20,8 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="sidebar">
-      <div className="sidebar-header">
+    <aside className="w-64 min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 text-white shadow-2xl">
+      <div className="p-6 border-b border-slate-700">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
             <BookOpen size={24} />
@@ -33,11 +33,15 @@ const Sidebar: React.FC = () => {
         </div>
       </div>
       
-      <nav className="sidebar-nav">
+      <nav className="p-4 space-y-2">
         {sections.map((section) => (
           <button
             key={section.key}
-            className={`sidebar-item ${currentSection === section.key ? 'sidebar-item-active' : ''}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 text-left border-none bg-transparent cursor-pointer ${
+              currentSection === section.key 
+                ? 'bg-white text-slate-900 shadow-lg font-semibold' 
+                : 'text-white hover:bg-white/10'
+            }`}
             onClick={() => handleSectionClick(section.path)}
           >
             <section.icon size={20} />
