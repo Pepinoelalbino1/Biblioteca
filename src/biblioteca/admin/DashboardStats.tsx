@@ -1,28 +1,30 @@
 import React from 'react';
-import { Building2, Users, BookOpen, Calendar } from 'lucide-react';
+import { Building2, Users, BookOpen, Calendar, TrendingUp } from 'lucide-react';
 
 interface StatsCardProps {
   title: string;
   value: string;
   icon: React.ElementType;
   colorClass: string;
+  trend?: string;
 }
 
-const colorMap: Record<string, string> = {
-  blue: 'bg-blue-100 text-blue-700',
-  green: 'bg-green-100 text-green-700',
-  purple: 'bg-purple-100 text-purple-700',
-  orange: 'bg-orange-100 text-orange-700',
-};
-
-const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon: Icon, colorClass }) => (
-  <div className="bg-white/80 backdrop-blur rounded-xl border border-white/20 shadow hover:shadow-lg transition p-6 flex items-center justify-between gap-4">
-    <div>
-      <h3 className="text-lg font-semibold text-gray-900 mb-2">{title}</h3>
-      <p className="text-2xl font-bold text-gray-800">{value}</p>
-    </div>
-    <div className={`flex items-center justify-center w-12 h-12 rounded-full ${colorMap[colorClass]}`}>
-      <Icon size={24} />
+const StatsCard: React.FC<StatsCardProps> = ({ title, value, icon: Icon, colorClass, trend }) => (
+  <div className="stats-card">
+    <div className="flex items-center justify-between">
+      <div>
+        <p className="text-sm font-medium text-slate-600 mb-1">{title}</p>
+        <p className="text-3xl font-bold text-slate-900">{value}</p>
+        {trend && (
+          <div className="flex items-center gap-1 mt-2">
+            <TrendingUp size={16} className="text-emerald-600" />
+            <span className="text-sm text-emerald-600 font-medium">{trend}</span>
+          </div>
+        )}
+      </div>
+      <div className={`stats-icon ${colorClass}`}>
+        <Icon size={24} />
+      </div>
     </div>
   </div>
 );
@@ -33,30 +35,34 @@ const DashboardStats: React.FC = () => {
       title: 'Total de Bibliotecas',
       value: '24',
       icon: Building2,
-      colorClass: 'blue'
+      colorClass: 'stats-icon-blue',
+      trend: '+12% este mes'
     },
     {
-      title: 'Servicios Activos',
-      value: '156',
+      title: 'Usuarios Activos',
+      value: '5,234',
       icon: Users,
-      colorClass: 'green'
+      colorClass: 'stats-icon-emerald',
+      trend: '+8% este mes'
     },
     {
-      title: 'Recursos',
+      title: 'Recursos Disponibles',
       value: '12.4K',
       icon: BookOpen,
-      colorClass: 'purple'
+      colorClass: 'stats-icon-purple',
+      trend: '+156 nuevos'
     },
     {
-      title: 'Reservas de Hoy',
+      title: 'Reservas Hoy',
       value: '89',
       icon: Calendar,
-      colorClass: 'orange'
+      colorClass: 'stats-icon-amber',
+      trend: '+23% vs ayer'
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div className="grid-responsive-4 mb-8">
       {stats.map((stat, index) => (
         <StatsCard key={index} {...stat} />
       ))}
@@ -64,4 +70,4 @@ const DashboardStats: React.FC = () => {
   );
 };
 
-export default DashboardStats; 
+export default DashboardStats;

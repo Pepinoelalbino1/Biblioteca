@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Mail, Lock, Eye, EyeOff, BookOpen } from 'lucide-react';
 
 const LoginPage: React.FC = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,59 +19,87 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8 max-w-md mx-auto">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Iniciar Sesión</h1>
-        <p className="text-gray-600 m-0">Accede a tu cuenta para gestionar tus reservas</p>
-      </div>
-
-      <div className="bg-white/80 backdrop-blur rounded-xl border border-white/20 shadow p-8">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              placeholder="tu@email.com"
-              required
-            />
+    <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
+      <div className="w-full max-w-md space-y-8">
+        {/* Header */}
+        <div className="text-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <BookOpen size={32} className="text-white" />
           </div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Iniciar Sesión</h1>
+          <p className="text-slate-600">Accede a tu cuenta para gestionar tus reservas</p>
+        </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
-            <input
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange('password', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              placeholder="Tu contraseña"
-              required
-            />
+        {/* Form */}
+        <div className="card">
+          <div className="card-body">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="form-group">
+                <label className="form-label">Correo Electrónico</label>
+                <div className="relative">
+                  <Mail size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="form-input pl-12"
+                    placeholder="tu@email.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Contraseña</label>
+                <div className="relative">
+                  <Lock size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={formData.password}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    className="form-input pl-12 pr-12"
+                    placeholder="Tu contraseña"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <label className="flex items-center">
+                  <input type="checkbox" className="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+                  <span className="ml-2 text-sm text-slate-600">Recordarme</span>
+                </label>
+                <a href="#" className="text-sm text-blue-600 hover:text-blue-500">
+                  ¿Olvidaste tu contraseña?
+                </a>
+              </div>
+
+              <button type="submit" className="btn btn-primary w-full">
+                Iniciar Sesión
+              </button>
+            </form>
           </div>
+        </div>
 
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-blue-500 to-blue-800 text-white rounded-lg px-6 py-3 font-semibold shadow transition hover:shadow-xl hover:from-blue-600 hover:to-blue-900 text-base"
-          >
-            Iniciar Sesión
-          </button>
-        </form>
-
-        <div className="mt-8 pt-6 border-t border-gray-200 text-center">
-          <p className="text-sm text-gray-600 mb-4">¿No tienes una cuenta?</p>
-          <Link
-            to="/signup"
-            className="inline-block bg-gray-100 text-gray-700 border border-gray-300 rounded-lg px-6 py-3 font-semibold transition hover:bg-gray-200 hover:text-gray-900 text-base"
-            style={{ textDecoration: 'none' }}
-          >
-            Crear Cuenta
-          </Link>
+        {/* Sign up link */}
+        <div className="text-center">
+          <p className="text-slate-600">
+            ¿No tienes una cuenta?{' '}
+            <Link to="/signup" className="text-blue-600 hover:text-blue-500 font-semibold">
+              Crear cuenta
+            </Link>
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginPage; 
+export default LoginPage;

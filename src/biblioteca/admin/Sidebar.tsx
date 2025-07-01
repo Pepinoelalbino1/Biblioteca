@@ -1,18 +1,17 @@
 import React from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, BarChart3, Building2, Settings } from 'lucide-react';
 
 const sections = [
-  { key: 'dashboard', label: 'Panel de Control', icon: '🏠', path: 'dashboard' },
-  { key: 'libraries', label: 'Bibliotecas', icon: '📚', path: 'libraries' },
-  { key: 'resources', label: 'Recursos', icon: '🔧', path: 'resources' },
+  { key: 'dashboard', label: 'Panel de Control', icon: BarChart3, path: 'dashboard' },
+  { key: 'libraries', label: 'Bibliotecas', icon: Building2, path: 'libraries' },
+  { key: 'resources', label: 'Recursos', icon: Settings, path: 'resources' },
 ];
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   
-  // Get current section from path - handle both /admin/dashboard and /admin/libraries
   const pathSegments = location.pathname.split('/');
   const currentSection = pathSegments[pathSegments.length - 1] || 'dashboard';
 
@@ -21,24 +20,27 @@ const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="w-64 min-h-screen bg-gradient-to-b from-blue-800 to-blue-900 text-white flex flex-col shadow-lg">
-      <div className="flex items-center gap-3 px-6 py-6 border-b border-blue-700">
-        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white text-blue-800">
-          <BookOpen size={24} />
-        </div>
-        <div>
-          <h1 className="text-xl font-bold leading-tight">Lima App</h1>
-          <p className="text-xs text-blue-200">Plataforma de Gestión</p>
+    <aside className="sidebar">
+      <div className="sidebar-header">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+            <BookOpen size={24} />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold">Lima App</h1>
+            <p className="text-sm text-slate-300">Panel de Administración</p>
+          </div>
         </div>
       </div>
-      <nav className="flex-1 flex flex-col gap-2 px-4 py-6">
+      
+      <nav className="sidebar-nav">
         {sections.map((section) => (
           <button
             key={section.key}
-            className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition text-left hover:bg-blue-700/80 ${currentSection === section.key ? 'bg-white text-blue-900 shadow font-bold' : ''}`}
+            className={`sidebar-item ${currentSection === section.key ? 'sidebar-item-active' : ''}`}
             onClick={() => handleSectionClick(section.path)}
           >
-            <span className="text-lg">{section.icon}</span>
+            <section.icon size={20} />
             {section.label}
           </button>
         ))}
@@ -47,4 +49,4 @@ const Sidebar: React.FC = () => {
   );
 };
 
-export default Sidebar; 
+export default Sidebar;

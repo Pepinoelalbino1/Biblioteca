@@ -1,34 +1,58 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { BookOpen, Search, Calendar, User, LogIn, UserPlus } from 'lucide-react';
 
 const navLinks = [
-  { to: '/', label: 'Inicio' },
-  { to: '/buscar', label: 'Bibliotecas' },
-  { to: '/libros', label: 'Libros' },
-  { to: '/reservas', label: 'Reservas' },
-  { to: '/mis-reservas', label: 'Mis Reservas' },
-  { to: '/login', label: 'Login' },
-  { to: '/signup', label: 'Sign Up' },
+  { to: '/', label: 'Inicio', icon: BookOpen },
+  { to: '/buscar', label: 'Buscar', icon: Search },
+  { to: '/libros', label: 'Libros', icon: BookOpen },
+  { to: '/reservas', label: 'Reservas', icon: Calendar },
+  { to: '/mis-reservas', label: 'Mis Reservas', icon: User },
+];
+
+const authLinks = [
+  { to: '/login', label: 'Iniciar Sesión', icon: LogIn },
+  { to: '/signup', label: 'Registrarse', icon: UserPlus },
 ];
 
 const ClientHeader: React.FC = () => {
   const location = useLocation();
+  
   return (
-    <header className="py-2 mb-4 shadow-sm bg-gradient-to-r from-blue-700 to-blue-900 text-white">
-      <nav className="max-w-7xl mx-auto flex items-center justify-between px-4">
-        <Link to="/" className="font-bold text-white flex items-center gap-2 text-lg">
-          <span role="img" aria-label="Lima" className="text-2xl">🏛️</span>
-          <span>Lima App</span>
+    <header className="header sticky top-0 z-40">
+      <nav className="header-nav max-w-7xl mx-auto">
+        <Link to="/" className="header-logo">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center">
+            <BookOpen size={24} />
+          </div>
+          <div>
+            <div className="text-xl font-bold">Lima App</div>
+            <div className="text-xs text-slate-300">Sistema de Bibliotecas</div>
+          </div>
         </Link>
-        <div className="flex items-center gap-2">
+        
+        <div className="header-links">
           {navLinks.map(link => (
             <Link
               key={link.to}
               to={link.to}
-              className={`py-1 px-3 text-sm rounded-lg transition-all duration-200 no-underline ${location.pathname === link.to ? 'bg-white/20 font-bold' : 'hover:bg-white/10'} text-white`}
-              style={{ whiteSpace: 'nowrap' }}
+              className={`nav-link ${location.pathname === link.to ? 'nav-link-active' : ''} hidden md:flex items-center gap-2`}
             >
+              <link.icon size={18} />
               {link.label}
+            </Link>
+          ))}
+          
+          <div className="hidden md:block w-px h-6 bg-white/20 mx-2"></div>
+          
+          {authLinks.map(link => (
+            <Link
+              key={link.to}
+              to={link.to}
+              className={`nav-link ${location.pathname === link.to ? 'nav-link-active' : ''} flex items-center gap-2`}
+            >
+              <link.icon size={18} />
+              <span className="hidden sm:inline">{link.label}</span>
             </Link>
           ))}
         </div>
@@ -37,4 +61,4 @@ const ClientHeader: React.FC = () => {
   );
 };
 
-export default ClientHeader; 
+export default ClientHeader;

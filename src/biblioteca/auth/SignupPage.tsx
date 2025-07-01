@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { Mail, Lock, User, Eye, EyeOff, BookOpen } from 'lucide-react';
 
 const SignupPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ const SignupPage: React.FC = () => {
     password: '',
     confirmPassword: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,91 +23,141 @@ const SignupPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8 max-w-lg mx-auto">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Crear Cuenta</h1>
-        <p className="text-gray-600 m-0">Únete a Lima App para acceder a todos los servicios</p>
-      </div>
+    <div className="min-h-[80vh] flex items-center justify-center py-12 px-4">
+      <div className="w-full max-w-lg space-y-8">
+        {/* Header */}
+        <div className="text-center">
+          <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <BookOpen size={32} className="text-white" />
+          </div>
+          <h1 className="text-3xl font-bold text-slate-900 mb-2">Crear Cuenta</h1>
+          <p className="text-slate-600">Únete a Lima App para acceder a todos los servicios</p>
+        </div>
 
-      <div className="bg-white/80 backdrop-blur rounded-xl border border-white/20 shadow p-8">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
-              <input
-                type="text"
-                value={formData.firstName}
-                onChange={(e) => handleInputChange('firstName', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                placeholder="Tu nombre"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Apellido</label>
-              <input
-                type="text"
-                value={formData.lastName}
-                onChange={(e) => handleInputChange('lastName', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                placeholder="Tu apellido"
-                required
-              />
-            </div>
+        {/* Form */}
+        <div className="card">
+          <div className="card-body">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-group">
+                  <label className="form-label">Nombre</label>
+                  <div className="relative">
+                    <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      value={formData.firstName}
+                      onChange={(e) => handleInputChange('firstName', e.target.value)}
+                      className="form-input pl-12"
+                      placeholder="Tu nombre"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Apellido</label>
+                  <div className="relative">
+                    <User size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="text"
+                      value={formData.lastName}
+                      onChange={(e) => handleInputChange('lastName', e.target.value)}
+                      className="form-input pl-12"
+                      placeholder="Tu apellido"
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Correo Electrónico</label>
+                <div className="relative">
+                  <Mail size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="form-input pl-12"
+                    placeholder="tu@email.com"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Contraseña</label>
+                <div className="relative">
+                  <Lock size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={formData.password}
+                    onChange={(e) => handleInputChange('password', e.target.value)}
+                    className="form-input pl-12 pr-12"
+                    placeholder="Mínimo 8 caracteres"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  >
+                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <label className="form-label">Confirmar Contraseña</label>
+                <div className="relative">
+                  <Lock size={20} className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" />
+                  <input
+                    type={showConfirmPassword ? 'text' : 'password'}
+                    value={formData.confirmPassword}
+                    onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                    className="form-input pl-12 pr-12"
+                    placeholder="Repite tu contraseña"
+                    required
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                  >
+                    {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  </button>
+                </div>
+              </div>
+
+              <div className="flex items-center">
+                <input type="checkbox" className="rounded border-slate-300 text-blue-600 focus:ring-blue-500" required />
+                <span className="ml-2 text-sm text-slate-600">
+                  Acepto los{' '}
+                  <a href="#" className="text-blue-600 hover:text-blue-500">términos y condiciones</a>
+                  {' '}y la{' '}
+                  <a href="#" className="text-blue-600 hover:text-blue-500">política de privacidad</a>
+                </span>
+              </div>
+
+              <button type="submit" className="btn btn-primary w-full">
+                Crear Cuenta
+              </button>
+            </form>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
-            <input
-              type="email"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              placeholder="tu@email.com"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
-            <input
-              type="password"
-              value={formData.password}
-              onChange={(e) => handleInputChange('password', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              placeholder="Mínimo 8 caracteres"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
-            <input
-              type="password"
-              value={formData.confirmPassword}
-              onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-              placeholder="Repite tu contraseña"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-gradient-to-r from-blue-500 to-blue-800 text-white rounded-lg px-6 py-3 font-semibold shadow transition hover:shadow-xl hover:from-blue-600 hover:to-blue-900 text-base"
-          >
-            Crear Cuenta
-          </button>
-        </form>
-        <div className="mt-8 pt-6 border-t border-gray-200 text-center">
-          <p className="text-sm text-gray-600 mb-4">¿Ya tienes una cuenta?</p>
-          <Link
-            to="/login"
-            className="inline-block bg-gray-100 text-gray-700 border border-gray-300 rounded-lg px-6 py-3 font-semibold transition hover:bg-gray-200 hover:text-gray-900 text-base"
-            style={{ textDecoration: 'none' }}
-          >
-            Iniciar Sesión
-          </Link>
+        </div>
+
+        {/* Login link */}
+        <div className="text-center">
+          <p className="text-slate-600">
+            ¿Ya tienes una cuenta?{' '}
+            <Link to="/login" className="text-blue-600 hover:text-blue-500 font-semibold">
+              Iniciar sesión
+            </Link>
+          </p>
         </div>
       </div>
     </div>
   );
 };
 
-export default SignupPage; 
+export default SignupPage;

@@ -1,67 +1,197 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Search, BookOpen, Calendar, Users, Star, MapPin } from 'lucide-react';
 
 const featuredLibraries = [
   {
+    id: 1,
     name: 'Biblioteca Nacional del Perú',
     image: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=600&q=80',
-    description: 'La institución bibliográfica más importante del país, ubicada en la Av. De la Poesía 160, San Borja, Lima.'
+    description: 'La institución bibliográfica más importante del país con más de 3 millones de volúmenes.',
+    location: 'San Borja, Lima',
+    rating: 4.8,
+    type: 'Nacional'
   },
   {
+    id: 2,
     name: 'Biblioteca Municipal de Miraflores',
     image: 'https://images.unsplash.com/photo-1467320424268-f91a16cf7c77?auto=format&fit=crop&w=600&q=80',
-    description: 'Espacio cultural y de lectura para la comunidad, ubicada en Av. Larco 770, Miraflores.'
+    description: 'Espacio cultural moderno con tecnología avanzada y programas comunitarios.',
+    location: 'Miraflores, Lima',
+    rating: 4.6,
+    type: 'Municipal'
   },
   {
+    id: 3,
     name: 'Biblioteca Municipal de San Isidro',
     image: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?auto=format&fit=crop&w=600&q=80',
-    description: 'Centro de información y cultura, ubicada en Calle Hermilio Hernández 395, San Isidro.'
+    description: 'Centro de información especializado en negocios y emprendimiento.',
+    location: 'San Isidro, Lima',
+    rating: 4.7,
+    type: 'Especializada'
+  }
+];
+
+const quickActions = [
+  {
+    title: 'Buscar Bibliotecas',
+    description: 'Encuentra bibliotecas por ubicación, tipo o servicios específicos',
+    icon: Search,
+    link: '/buscar',
+    color: 'from-blue-500 to-blue-600'
+  },
+  {
+    title: 'Explorar Catálogo',
+    description: 'Navega por nuestra colección completa de bibliotecas',
+    icon: BookOpen,
+    link: '/catalogo',
+    color: 'from-emerald-500 to-emerald-600'
+  },
+  {
+    title: 'Hacer Reserva',
+    description: 'Reserva espacios de estudio, salas y recursos',
+    icon: Calendar,
+    link: '/reservas',
+    color: 'from-purple-500 to-purple-600'
+  },
+  {
+    title: 'Mis Reservas',
+    description: 'Gestiona y revisa todas tus reservas activas',
+    icon: Users,
+    link: '/mis-reservas',
+    color: 'from-amber-500 to-amber-600'
   }
 ];
 
 const HomePage: React.FC = () => (
-  <div className="flex flex-col gap-8">
-    {/* Mensaje de Inicio */}
-    <div className="bg-gradient-to-r from-blue-700 to-blue-900 rounded-2xl p-10 text-center text-white flex flex-col items-center gap-6 shadow-lg">
-      <div className="text-6xl mb-2">📚</div>
-      <h1 className="text-4xl font-bold mb-2">Bienvenido a Lima App</h1>
-      <p className="text-white/90 m-0 text-lg">Tu plataforma para explorar y gestionar recursos de bibliotecas</p>
-      <div className="flex flex-wrap gap-4 justify-center mt-4">
-        <Link
-          to="/buscar"
-          className="bg-white text-blue-700 font-semibold rounded-lg px-6 py-3 shadow hover:bg-blue-100 transition text-base"
-        >
-          🔍 Buscar Bibliotecas
+  <div className="space-y-12 fade-in">
+    {/* Hero Section */}
+    <section className="hero">
+      <div className="hero-title">
+        📚 Bienvenido a Lima App
+      </div>
+      <p className="hero-subtitle">
+        Tu plataforma integral para explorar y gestionar recursos de bibliotecas en Lima
+      </p>
+      <div className="hero-actions">
+        <Link to="/buscar" className="btn btn-primary btn-lg">
+          <Search size={24} />
+          Buscar Bibliotecas
         </Link>
-        <Link
-          to="/catalogo"
-          className="bg-white text-blue-700 font-semibold rounded-lg px-6 py-3 shadow hover:bg-blue-100 transition text-base"
-        >
-          📚 Ver Catálogo
+        <Link to="/catalogo" className="btn btn-secondary btn-lg">
+          <BookOpen size={24} />
+          Ver Catálogo Completo
         </Link>
       </div>
-    </div>
+    </section>
 
-    {/* BIBLIOTECAS DESTACADAS */}
-    <div>
-      <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center tracking-wide">BIBLIOTECAS DESTACADAS</h2>
-      <div className="flex flex-wrap gap-8 justify-center">
-        {featuredLibraries.map((lib, idx) => (
-          <div key={idx} className="bg-white rounded-xl shadow-md overflow-hidden flex flex-col items-center w-80">
-            <img
-              src={lib.image}
-              alt={lib.name}
-              className="w-full h-44 object-cover rounded-t-xl"
-            />
-            <div className="p-5 w-full">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2 text-center">{lib.name}</h3>
-              <p className="text-gray-600 text-base text-center m-0">{lib.description}</p>
+    {/* Quick Actions */}
+    <section className="space-y-8">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-slate-900 mb-4">Acciones Rápidas</h2>
+        <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+          Accede rápidamente a las funciones más utilizadas de nuestra plataforma
+        </p>
+      </div>
+      
+      <div className="grid-responsive-2 lg:grid-cols-4">
+        {quickActions.map((action, index) => (
+          <Link
+            key={index}
+            to={action.link}
+            className="feature-card group"
+          >
+            <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl bg-gradient-to-br ${action.color} flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-200`}>
+              <action.icon size={32} />
+            </div>
+            <h3 className="feature-title">{action.title}</h3>
+            <p className="feature-description">{action.description}</p>
+            <div className="btn btn-primary btn-sm">
+              Acceder
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+
+    {/* Featured Libraries */}
+    <section className="space-y-8">
+      <div className="text-center">
+        <h2 className="text-3xl font-bold text-slate-900 mb-4">Bibliotecas Destacadas</h2>
+        <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+          Descubre las bibliotecas más populares y mejor valoradas de nuestra red
+        </p>
+      </div>
+      
+      <div className="grid-responsive">
+        {featuredLibraries.map((library) => (
+          <div key={library.id} className="card overflow-hidden hover:scale-105 transition-all duration-300">
+            <div className="relative">
+              <img
+                src={library.image}
+                alt={library.name}
+                className="w-full h-48 object-cover"
+              />
+              <div className="absolute top-4 right-4">
+                <span className="badge badge-primary">{library.type}</span>
+              </div>
+            </div>
+            
+            <div className="card-body">
+              <h3 className="text-xl font-bold text-slate-900 mb-2">{library.name}</h3>
+              
+              <div className="flex items-center gap-2 text-slate-600 mb-3">
+                <MapPin size={16} />
+                <span className="text-sm">{library.location}</span>
+              </div>
+              
+              <p className="text-slate-600 mb-4">{library.description}</p>
+              
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1">
+                  <Star size={16} className="text-amber-500 fill-current" />
+                  <span className="font-semibold text-slate-900">{library.rating}</span>
+                  <span className="text-slate-500 text-sm">/5.0</span>
+                </div>
+                <Link to={`/biblioteca/${library.id}`} className="btn btn-primary btn-sm">
+                  Ver Detalles
+                </Link>
+              </div>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
+
+    {/* Statistics Section */}
+    <section className="glass rounded-3xl p-8">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-slate-900 mb-4">Nuestra Red en Números</h2>
+        <p className="text-xl text-slate-600">
+          Conectando comunidades a través del conocimiento
+        </p>
+      </div>
+      
+      <div className="grid-responsive-4">
+        <div className="text-center">
+          <div className="text-4xl font-bold text-blue-600 mb-2">24+</div>
+          <div className="text-slate-600">Bibliotecas Activas</div>
+        </div>
+        <div className="text-center">
+          <div className="text-4xl font-bold text-emerald-600 mb-2">150K+</div>
+          <div className="text-slate-600">Libros Disponibles</div>
+        </div>
+        <div className="text-center">
+          <div className="text-4xl font-bold text-purple-600 mb-2">5K+</div>
+          <div className="text-slate-600">Usuarios Activos</div>
+        </div>
+        <div className="text-center">
+          <div className="text-4xl font-bold text-amber-600 mb-2">98%</div>
+          <div className="text-slate-600">Satisfacción</div>
+        </div>
+      </div>
+    </section>
   </div>
 );
 
-export default HomePage; 
+export default HomePage;
