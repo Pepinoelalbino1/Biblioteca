@@ -1,17 +1,17 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import HomePage from './biblioteca/libraries/HomePage';
-import LoginPage from './biblioteca/auth/LoginPage';
-import SignupPage from './biblioteca/auth/SignupPage';
-import LibrariesPage from './biblioteca/libraries/LibrariesPage';
-import SearchPage from './biblioteca/libraries/SearchPage';
-import CatalogPage from './biblioteca/libraries/CatalogPage';
-import BooksPage from './biblioteca/books/BooksPage';
-import LibraryDetailPage from './biblioteca/libraries/LibraryDetailPage';
-import ReservationsPage from './biblioteca/reservations/ReservationsPage';
-import MyReservationsPage from './biblioteca/reservations/MyReservationsPage';
-import ClientHeader from './biblioteca/shared/ClientHeader';
-import ClientFooter from './biblioteca/shared/ClientFooter';
+import HomePage from '../../../biblioteca/libraries/HomePage';
+import LoginPage from '../../../biblioteca/auth/LoginPage';
+import SignupPage from '../../../biblioteca/auth/SignupPage';
+import LibrariesPage from '../../../biblioteca/libraries/LibrariesPage';
+import SearchPage from '../../../biblioteca/libraries/SearchPage';
+import CatalogPage from '../../../biblioteca/libraries/CatalogPage';
+import BooksPage from '../../../biblioteca/books/BooksPage';
+import LibraryDetailPage from '../../../biblioteca/libraries/LibraryDetailPage';
+import ReservationsPage from '../../../biblioteca/reservations/ReservationsPage';
+import MyReservationsPage from '../../../biblioteca/reservations/MyReservationsPage';
+import ClientHeader from '../../../biblioteca/shared/ClientHeader';
+import ClientFooter from '../../../biblioteca/shared/ClientFooter';
 
 const ClientApp: React.FC = () => {
   return (

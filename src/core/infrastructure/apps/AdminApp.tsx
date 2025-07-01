@@ -1,9 +1,9 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import Sidebar from './biblioteca/admin/Sidebar';
-import Dashboard from './biblioteca/admin/Dashboard';
-import { Libraries } from './biblioteca/admin/Libraries';
-import { Resources } from './biblioteca/admin/Resources';
+import Sidebar from '../../../biblioteca/admin/Sidebar';
+import Dashboard from '../../../biblioteca/admin/Dashboard';
+import Libraries from '../../../biblioteca/admin/Libraries';
+import Resources from '../../../biblioteca/admin/Resources';
 
 const AdminApp: React.FC = () => {
   return (

@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 /* Reset básico */
 * {
   margin: 0;
@@ -126,21 +130,6 @@ body {
   background: linear-gradient(135deg, var(--icon-blue), var(--dark-blue));
   color: white;
   box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-}
-
-/* Cards */
-.card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all 0.3s ease;
-}
-
-.card:hover {
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
 
 /* Stats Cards */
