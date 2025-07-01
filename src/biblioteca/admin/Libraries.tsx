@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LibraryCard from '../libraries/LibraryCard';
 import { Library, LibraryType, LibraryStatus } from '../../core/domain/models/Library';
-import { Plus } from 'lucide-react';
+import { Plus, Search, Filter, Download, Upload } from 'lucide-react';
 
 export const Libraries: React.FC = () => {
   const [showForm, setShowForm] = useState(false);
@@ -111,7 +111,6 @@ export const Libraries: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
     console.log('New library data:', formData);
     setFormData({
       name: '',
@@ -127,182 +126,232 @@ export const Libraries: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex justify-between items-center">
+    <div className="space-y-8 p-6">
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Gestión de Bibliotecas</h1>
-          <p className="text-gray-600 m-0">Administra las bibliotecas del sistema</p>
+          <h1 className="text-4xl font-bold text-slate-900 mb-3">Gestión de Bibliotecas</h1>
+          <p className="text-xl text-slate-600">Administra las bibliotecas del sistema</p>
         </div>
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="flex items-center gap-2 bg-gradient-to-r from-blue-500 to-blue-800 text-white rounded-lg px-6 py-3 font-semibold shadow transition hover:shadow-xl hover:from-blue-600 hover:to-blue-900"
-        >
-          <Plus size={20} />
-          {showForm ? 'Cancelar' : 'Añadir Biblioteca'}
-        </button>
+        <div className="flex flex-wrap gap-3">
+          <button className="btn btn-secondary">
+            <Download size={20} />
+            Exportar
+          </button>
+          <button className="btn btn-secondary">
+            <Upload size={20} />
+            Importar
+          </button>
+          <button
+            onClick={() => setShowForm(!showForm)}
+            className="btn btn-primary"
+          >
+            <Plus size={20} />
+            {showForm ? 'Cancelar' : 'Añadir Biblioteca'}
+          </button>
+        </div>
       </div>
 
       {/* Add Library Form */}
       {showForm && (
-        <div className="bg-white/80 backdrop-blur rounded-xl border border-white/20 shadow p-8 mb-6">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6">Nueva Biblioteca</h3>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Nombre de la Biblioteca</label>
+        <div className="card">
+          <div className="card-header">
+            <h3 className="text-2xl font-bold text-slate-900">Nueva Biblioteca</h3>
+            <p className="text-slate-600">Completa la información para registrar una nueva biblioteca</p>
+          </div>
+          
+          <div className="card-body">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="form-group">
+                  <label className="form-label">Nombre de la Biblioteca</label>
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) => handleInputChange('name', e.target.value)}
+                    className="form-input"
+                    placeholder="Ej: Biblioteca Central"
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Ubicación</label>
+                  <input
+                    type="text"
+                    value={formData.location}
+                    onChange={(e) => handleInputChange('location', e.target.value)}
+                    className="form-input"
+                    placeholder="Ej: Centro de Lima"
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Tipo</label>
+                  <select
+                    value={formData.type}
+                    onChange={(e) => handleInputChange('type', e.target.value)}
+                    className="form-select"
+                    required
+                  >
+                    <option value={LibraryType.Public}>Pública</option>
+                    <option value={LibraryType.Academic}>Académica</option>
+                    <option value={LibraryType.Private}>Privada</option>
+                    <option value={LibraryType.Specialized}>Especializada</option>
+                  </select>
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Capacidad</label>
+                  <input
+                    type="number"
+                    value={formData.capacity}
+                    onChange={(e) => handleInputChange('capacity', e.target.value)}
+                    className="form-input"
+                    placeholder="Ej: 500"
+                    required
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Teléfono</label>
+                  <input
+                    type="text"
+                    value={formData.phone}
+                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    className="form-input"
+                    placeholder="Ej: +51 1 234-5678"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Email</label>
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    className="form-input"
+                    placeholder="Ej: correo@biblioteca.lima"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Sitio Web</label>
+                  <input
+                    type="text"
+                    value={formData.website}
+                    onChange={(e) => handleInputChange('website', e.target.value)}
+                    className="form-input"
+                    placeholder="Ej: www.biblioteca.lima"
+                  />
+                </div>
+                
+                <div className="form-group">
+                  <label className="form-label">Estado</label>
+                  <select
+                    value={formData.status}
+                    onChange={(e) => handleInputChange('status', e.target.value)}
+                    className="form-select"
+                    required
+                  >
+                    <option value={LibraryStatus.Active}>Activa</option>
+                    <option value={LibraryStatus.Inactive}>Inactiva</option>
+                    <option value={LibraryStatus.Maintenance}>Mantenimiento</option>
+                  </select>
+                </div>
+              </div>
+              
+              <div className="flex justify-end gap-3">
+                <button 
+                  type="button" 
+                  onClick={() => setShowForm(false)}
+                  className="btn btn-secondary"
+                >
+                  Cancelar
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  Guardar Biblioteca
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Search and Filters */}
+      <div className="card">
+        <div className="card-body">
+          <div className="flex flex-col lg:flex-row gap-4">
+            <div className="flex-1 search-container">
+              <Search size={20} className="search-icon" />
               <input
                 type="text"
-                value={formData.name}
-                onChange={(e) => handleInputChange('name', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                placeholder="Ej: Biblioteca Central"
-                required
+                placeholder="Buscar bibliotecas..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="search-input"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Ubicación</label>
-              <input
-                type="text"
-                value={formData.location}
-                onChange={(e) => handleInputChange('location', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                placeholder="Ej: Centro de Lima"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Tipo</label>
+            
+            <div className="flex gap-3">
+              <div className="flex items-center gap-2">
+                <Filter size={20} className="text-slate-400" />
+                <select
+                  value={selectedType}
+                  onChange={(e) => setSelectedType(e.target.value as LibraryType | '')}
+                  className="form-select"
+                >
+                  <option value="">Todos los tipos</option>
+                  <option value={LibraryType.Public}>Pública</option>
+                  <option value={LibraryType.Academic}>Académica</option>
+                  <option value={LibraryType.Private}>Privada</option>
+                  <option value={LibraryType.Specialized}>Especializada</option>
+                </select>
+              </div>
+              
               <select
-                value={formData.type}
-                onChange={(e) => handleInputChange('type', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                required
+                value={selectedStatus}
+                onChange={(e) => setSelectedStatus(e.target.value as LibraryStatus | '')}
+                className="form-select"
               >
-                <option value={LibraryType.Public}>Pública</option>
-                <option value={LibraryType.Academic}>Académica</option>
-                <option value={LibraryType.Private}>Privada</option>
-                <option value={LibraryType.Specialized}>Especializada</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Capacidad</label>
-              <input
-                type="number"
-                value={formData.capacity}
-                onChange={(e) => handleInputChange('capacity', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                placeholder="Ej: 500"
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Teléfono</label>
-              <input
-                type="text"
-                value={formData.phone}
-                onChange={(e) => handleInputChange('phone', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                placeholder="Ej: +51 1 234-5678"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
-              <input
-                type="email"
-                value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                placeholder="Ej: correo@biblioteca.lima"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Sitio Web</label>
-              <input
-                type="text"
-                value={formData.website}
-                onChange={(e) => handleInputChange('website', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                placeholder="Ej: www.biblioteca.lima"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Estado</label>
-              <select
-                value={formData.status}
-                onChange={(e) => handleInputChange('status', e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                required
-              >
+                <option value="">Todos los estados</option>
                 <option value={LibraryStatus.Active}>Activa</option>
                 <option value={LibraryStatus.Inactive}>Inactiva</option>
                 <option value={LibraryStatus.Maintenance}>Mantenimiento</option>
               </select>
             </div>
-            <div className="md:col-span-2 flex justify-end">
-              <button type="submit" className="bg-blue-700 hover:bg-blue-800 text-white font-semibold py-2 px-8 rounded-md transition-colors">Guardar Biblioteca</button>
-            </div>
-          </form>
-        </div>
-      )}
-
-      {/* Search and Filters */}
-      <div className="flex flex-wrap gap-4 items-center bg-white/95 rounded-2xl shadow-lg p-6 max-w-4xl mx-auto mb-4">
-        <div className="flex-1 min-w-[220px] relative">
-          <span className="absolute left-3 top-3 text-xl pointer-events-none">🔍</span>
-          <input
-            type="text"
-            placeholder="Buscar bibliotecas..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
-          />
-        </div>
-        <div className="flex gap-2 items-center">
-          <span className="text-xl">🔧</span>
-          <select
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value as LibraryType | '')}
-            className="px-4 py-2 rounded-md border border-gray-300 text-base focus:ring-2 focus:ring-blue-400 focus:outline-none"
-          >
-            <option value="">Todos los tipos</option>
-            <option value={LibraryType.Public}>Pública</option>
-            <option value={LibraryType.Academic}>Académica</option>
-            <option value={LibraryType.Private}>Privada</option>
-            <option value={LibraryType.Specialized}>Especializada</option>
-          </select>
-          <select
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value as LibraryStatus | '')}
-            className="px-4 py-2 rounded-md border border-gray-300 text-base focus:ring-2 focus:ring-blue-400 focus:outline-none"
-          >
-            <option value="">Todos los estados</option>
-            <option value={LibraryStatus.Active}>Activa</option>
-            <option value={LibraryStatus.Inactive}>Inactiva</option>
-            <option value={LibraryStatus.Maintenance}>Mantenimiento</option>
-          </select>
+          </div>
         </div>
       </div>
 
       {/* Libraries List */}
-      <div>
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Bibliotecas Registradas</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {filteredLibraries.map((library) => (
-            <LibraryCard key={library.id} library={library} />
-          ))}
+      <div className="card">
+        <div className="card-header">
+          <h2 className="text-2xl font-bold text-slate-900">
+            Bibliotecas Registradas ({filteredLibraries.length})
+          </h2>
+          <p className="text-slate-600">Lista completa de bibliotecas en el sistema</p>
+        </div>
+        
+        <div className="card-body">
+          {filteredLibraries.length > 0 ? (
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              {filteredLibraries.map((library) => (
+                <LibraryCard key={library.id} library={library} />
+              ))}
+            </div>
+          ) : (
+            <div className="empty-state">
+              <div className="empty-state-icon">🏛️</div>
+              <h3 className="empty-state-title">No se encontraron bibliotecas</h3>
+              <p className="empty-state-description">
+                Intenta ajustar tus criterios de búsqueda o añade una nueva biblioteca
+              </p>
+            </div>
+          )}
         </div>
       </div>
-
-      {filteredLibraries.length === 0 && (
-        <div className="empty-state">
-          <div className="empty-state-icon">
-            <span style={{ fontSize: '2rem' }}>🏛️</span>
-          </div>
-          <h3 className="empty-state-title">No se encontraron bibliotecas</h3>
-          <p className="empty-state-description">
-            Intenta ajustar tus criterios de búsqueda o añade una nueva biblioteca
-          </p>
-        </div>
-      )}
     </div>
   );
-}; 
+};
